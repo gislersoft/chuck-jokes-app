@@ -20,8 +20,8 @@ export class ChuckAPIService {
 
   constructor(private http: HttpClient) { }
 
-  getRandomJoke(): Observable<Joke[]> {
-    return this.http.get<Joke[]>(`${this.apiBase}/random`)
+  getRandomJoke(): Observable<Joke> {
+    return this.http.get<Joke>(`${this.apiBase}/random`)
   }
 
 }
