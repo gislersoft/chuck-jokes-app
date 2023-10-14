@@ -73,6 +73,7 @@ jobs:
   # Build artifact job
   artifact:
     needs: deploy
+    runs-on: ubuntu-latest
     steps:
       - name: Creating Deployable Package
         run: npm run package
