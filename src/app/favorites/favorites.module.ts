@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    FavoritesPageComponent
+  ],
   imports: [
     CommonModule
   ]
