@@ -64,6 +64,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Deployable Package
         uses: actions/upload-release-asset@v1
@@ -72,6 +74,8 @@ jobs:
           asset_path: ./deployable.tgz
           asset_name: deployable.tar.gz
           asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Deployment job
   deploy:
