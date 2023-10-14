@@ -7,6 +7,7 @@
     "build": "ng build",
     "build:prod": "ng build --configuration production --base-href https://gislersoft.github.io/chuck-jokes-app/",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "package": "cd dist/chuck-jokes-app && tar -czvf ../../deployable.tgz *",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
