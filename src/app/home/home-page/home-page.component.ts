@@ -9,7 +9,7 @@ import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
 })
 export class HomePageComponent implements OnInit {
   private static INITIAL_RANDOM_JOKES: number = 10;
-  private initialRandomJokes:Joke[] = [];
+  public initialRandomJokes:Joke[] = [];
 
   constructor(private chuckApi: ChuckAPIService) {}
 

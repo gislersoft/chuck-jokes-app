@@ -1,1 +1,23 @@
-<p>home-page works!</p>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <mat-toolbar color="primary">
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>CHulk Norris App</span>
+                <span class="bar-spacer"></span>
+                <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+            </mat-toolbar>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <mat-card class="joke-card" *ngFor="let joke of initialRandomJokes">
+            <mat-card-content>
+                {{joke.value}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
