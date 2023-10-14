@@ -22,8 +22,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
-  build:
+  # Pre-build job
+  pre-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,9 +35,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check lint
+        run: npm run lint
+
       - name: Run tests
         run: npm run test:headless
 
+  # Build job
+  build:
+    needs: pre-build
+    runs-on: ubuntu-latest
+    steps:
       - name: Build
         run: npm run build:prod
 
@@ -50,30 +58,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
 
-      - name: Creating Deployable Package
-        run: npm run package
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Deployable Package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./deployable.tgz
-          asset_name: ${{ github.ref }}-deployable.tar.gz
-          asset_content_type: application/gzip
-
   # Deployment job
   deploy:
     environment:
@@ -85,3 +69,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+
+  # Build artifact job
+  artifact:
+    needs: deploy
+    steps:
+      - name: Creating Deployable Package
+        run: npm run package
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Deployable Package
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./deployable.tgz
+          asset_name: deployable.tar.gz
+          asset_content_type: application/gzip

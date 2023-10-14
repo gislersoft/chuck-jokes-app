@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 
 export type Joke = {
-  categories?: any[];
+  categories?: string[];
   created_at?: string;
   icon_url?: string;
   id?: string;
