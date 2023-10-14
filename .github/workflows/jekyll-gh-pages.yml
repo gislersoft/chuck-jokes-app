@@ -24,7 +24,7 @@ concurrency:
 jobs:
   # Build job
   build:
-    permissions: read-all
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
