@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomePageComponent } from './home-page/home-page.component';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 @NgModule({
   declarations: [
@@ -14,9 +16,10 @@ import {MatCardModule} from '@angular/material/card';
   imports: [
     CommonModule,
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
-    MatToolbarModule,
-    MatCardModule
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ]
 })
 export class HomeModule { }

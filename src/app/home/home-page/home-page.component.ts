@@ -10,6 +10,7 @@ import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
 export class HomePageComponent implements OnInit {
   private static INITIAL_RANDOM_JOKES: number = 10;
   public initialRandomJokes:Joke[] = [];
+  public loading: boolean = true;
 
   constructor(private chuckApi: ChuckAPIService) {}
 
@@ -18,17 +19,26 @@ export class HomePageComponent implements OnInit {
   }
 
   private loadInitialJokes(): void {
+    this.loading = true;
+
     let requests:Array<Observable<Joke>> = [];
 
     for(let i = 0; i < HomePageComponent.INITIAL_RANDOM_JOKES; i++) {
       requests.push(this.chuckApi.getRandomJoke());
     }
 
-    combineLatest(
-      requests
-    ).subscribe((results: Joke[])=>{
-      this.initialRandomJokes = results;
+    combineLatest(requests).subscribe({
+      next: (results:Joke[]) => {
+        this.initialRandomJokes = results;
+        this.loading = false;
+      },
+      error: (e) => {
+        console.error(e)
+        this.loading = false;
+      },
+      complete: ()=> this.loading = false
     });
+
   }
 
 }

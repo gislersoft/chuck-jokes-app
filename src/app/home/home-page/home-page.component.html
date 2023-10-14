@@ -13,7 +13,10 @@
             </mat-toolbar>
         </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12 center" *ngIf="loading">
+        <div class="box spinner-div"><mat-spinner></mat-spinner></div>
+    </div>
+    <div class="col-xs-12" *ngIf="!loading">
         <mat-card class="joke-card" *ngFor="let joke of initialRandomJokes">
             <mat-card-content>
                 {{joke.value}}
