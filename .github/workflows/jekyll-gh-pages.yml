@@ -46,8 +46,33 @@ jobs:
         with:
           source: ./dist/chuck-jokes-app
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+
+      - name: Creating Deployable Package
+        run: npm run package
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Deployable Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./deployable.tgz
+          asset_name: ${{ github.ref }}-deployable.tar.gz
+          asset_content_type: application/gzip
 
   # Deployment job
   deploy:
