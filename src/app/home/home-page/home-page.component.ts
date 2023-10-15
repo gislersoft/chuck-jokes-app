@@ -44,6 +44,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private pushNewJoke(): void {
     this.chuckApi.getRandomJoke().subscribe({
       next: (results:Joke) => {
+        if (this.isAnExistingJoke(results) ||
+          this.jokesStorageService.isJokeInList(results)
+        ) {
+          return; // Ignore same jokes.
+        }
         if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
           this.jokesList.shift();
         }
@@ -57,6 +62,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
         console.error(e)
       }
     });
+  }
+
+  public isAnExistingJoke(joke: Joke): boolean {
+    const found = this.jokesList.find((element)=> element.id === joke.id );
+    return (found !== undefined);
   }
 
   public goToFavorites(): void {
