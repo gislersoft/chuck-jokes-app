@@ -23,7 +23,12 @@ import { JokeCardComponent } from './joke-card/joke-card.component';
     MatToolbarModule
   ],
   exports: [
-    JokeCardComponent
+    JokeCardComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ]
 })
 export class SharedModule { }
