@@ -5,6 +5,7 @@ import { Joke } from './types/joke.type';
   providedIn: 'root'
 })
 export class JokesStorageService {
+  public static MAX_FAVORITES = 10;
   public static STORE_JOKE_KEY = 'favorites-db';
   public savedJokesList: Joke[] = [];
 
@@ -31,8 +32,10 @@ export class JokesStorageService {
   }
 
   public addJoke(joke: Joke) {
-    this.savedJokesList.push(joke);
-    this.persistJokes();
+    if (!this.isFull() && !this.isJokeInList(joke)) {
+      this.savedJokesList.push(joke);
+      this.persistJokes();
+    }
   }
 
   public removeJoke(joke: Joke) {
@@ -45,5 +48,9 @@ export class JokesStorageService {
     const currentJokesList = this.getJokes();
     const found = currentJokesList.find((element)=> (element.id === joke.id));
     return (found !== undefined);
+  }
+
+  public isFull(): boolean {
+    return (this.savedJokesList.length >= JokesStorageService.MAX_FAVORITES);
   }
 }

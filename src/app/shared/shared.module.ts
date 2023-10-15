@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +13,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 
 
 const MATERIAL_MODULES = [
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatIconModule,

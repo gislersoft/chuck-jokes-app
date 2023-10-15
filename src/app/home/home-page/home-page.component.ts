@@ -77,6 +77,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.jokesStorageService.addJoke(event);
   }
 
+  public getFavoritesTotal(): number | null {
+    if (this.jokesStorageService.savedJokesList.length === 0) return null;
+    return this.jokesStorageService.savedJokesList.length;
+  }
+
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
   }

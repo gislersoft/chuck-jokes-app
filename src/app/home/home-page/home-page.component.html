@@ -1,6 +1,6 @@
 <div class="row">
     <app-top-bar class="col-xs-12">
-        <button mat-button aria-label="Go to favorites" (click)="goToFavorites()">
+        <button mat-button aria-label="Go to favorites" (click)="goToFavorites()" [matBadge]="getFavoritesTotal()" matBadgeColor="warn">
             <span>My favorites</span> <mat-icon>favorite</mat-icon>
         </button>
     </app-top-bar>

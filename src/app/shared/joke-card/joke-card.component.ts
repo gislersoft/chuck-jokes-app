@@ -38,4 +38,8 @@ export class JokeCardComponent {
     }
     return '';
   }
+
+  public isFavoritesFull(): boolean {
+    return this.jokeStorageService.isFull();
+  }
 }
