@@ -14,7 +14,7 @@ const jokeMock: Joke = {
     'Chuck Norris develop without unit test.'
 };
 
-fdescribe('JokesStorageService', () => {
+describe('JokesStorageService', () => {
   let service: JokesStorageService;
 
   beforeEach(() => {
