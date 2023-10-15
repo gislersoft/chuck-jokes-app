@@ -3,12 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomePageComponent } from './home-page.component';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
@@ -18,11 +13,7 @@ describe('HomePageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        MatButtonModule,
-        MatCardModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatToolbarModule
+        SharedModule
       ],
       declarations: [ HomePageComponent ]
     })

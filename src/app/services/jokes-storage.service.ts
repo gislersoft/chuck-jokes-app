@@ -9,8 +9,6 @@ export class JokesStorageService {
   public static STORE_JOKE_KEY = 'favorites-db';
   public savedJokesList: Joke[] = [];
 
-  constructor() {}
-
   private loadJokes(): void {
     const storedData = localStorage.getItem(JokesStorageService.STORE_JOKE_KEY);
     if (!storedData) {
