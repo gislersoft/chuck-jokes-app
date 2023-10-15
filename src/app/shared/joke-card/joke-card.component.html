@@ -5,7 +5,10 @@
                 <span [ngClass]="{'fading': (index==0 && !deleteMode)}">{{joke?.value}}</span>
             </div>
             <div class="col-xs middle-right">
-                <button mat-icon-button color="{{ (deleteMode) ? '' : getColor(joke) }}" aria-label="Add to my favorites jokes" (click)="performAction(joke)">
+                <button mat-icon-button color="{{ (deleteMode) ? '' : getColor(joke) }}"
+                    aria-label="Add to my favorites jokes"
+                    [disabled]="isFavoritesFull() && !deleteMode"
+                    (click)="performAction(joke)">
                     <mat-icon>{{ (deleteMode) ? 'delete' : 'favorite'}}</mat-icon>
                 </button>
             </div>

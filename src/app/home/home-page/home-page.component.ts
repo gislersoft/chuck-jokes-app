@@ -1,7 +1,7 @@
 import { JokesStorageService } from './../../services/jokes-storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, delay, interval } from 'rxjs';
 import { ChuckAPIService } from 'src/app/services/chuck-api.service';
 import { Joke } from 'src/app/services/types/joke.type';
 
@@ -44,6 +44,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private pushNewJoke(): void {
     this.chuckApi.getRandomJoke().subscribe({
       next: (results:Joke) => {
+        if (this.isAnExistingJoke(results) ||
+          this.jokesStorageService.isJokeInList(results)
+        ) {
+          return; // Ignore same jokes.
+        }
         if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
           this.jokesList.shift();
         }
@@ -59,12 +64,22 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public isAnExistingJoke(joke: Joke): boolean {
+    const found = this.jokesList.find((element)=> element.id === joke.id );
+    return (found !== undefined);
+  }
+
   public goToFavorites(): void {
     this.router.navigate(['/favorites']);
   }
 
   public addJokeToFavorites(event: Joke): void {
     this.jokesStorageService.addJoke(event);
+  }
+
+  public getFavoritesTotal(): number | null {
+    if (this.jokesStorageService.savedJokesList.length === 0) return null;
+    return this.jokesStorageService.savedJokesList.length;
   }
 
   ngOnDestroy(): void {
