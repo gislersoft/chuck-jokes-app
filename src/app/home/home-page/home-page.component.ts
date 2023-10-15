@@ -12,7 +12,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private timerSubscription: Subscription = Subscription.EMPTY;
 
   public MAX_JOKES_PER_PAGE = 10;
-  public initialRandomJokes:Joke[] = [];
+  public jokesList:Joke[] = [];
 
   constructor(private chuckApi: ChuckAPIService) {}
 
@@ -37,19 +37,23 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private pushNewJoke(): void {
     this.chuckApi.getRandomJoke().subscribe({
       next: (results:Joke) => {
-        if (this.initialRandomJokes.length >= this.MAX_JOKES_PER_PAGE) {
-          this.initialRandomJokes.shift();
+        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+          this.jokesList.shift();
         }
         results.timestamp = Date.now(); // Grab time maybe for unit tests later.
-        this.initialRandomJokes.push(results);
-        if (this.initialRandomJokes.length >= this.MAX_JOKES_PER_PAGE) {
-          this.toggleTimer();
+        this.jokesList.push(results);
+        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+          // this.toggleTimer();
         }
       },
       error: (e) => {
         console.error(e)
       }
     });
+  }
+
+  public addToFavorites(joke: Joke): void {
+    console.log(joke);
   }
 
   ngOnDestroy(): void {
