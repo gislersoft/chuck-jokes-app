@@ -1,6 +1,9 @@
 <div class="row">
-    <app-top-bar class="col-xs-12"></app-top-bar>
+    <app-top-bar currentPage="My Favorites" class="col-xs-12"></app-top-bar>
     <div class="col-xs-12">
+        <span class="zero-state center" *ngIf="jokesList.length === 0">
+            Really? You don't have any favorite?
+        </span>
         <ng-container *ngFor="let joke of jokesList.reverse(); let i = index">
             <app-joke-card
                 [index]="i"
