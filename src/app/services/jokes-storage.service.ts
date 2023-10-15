@@ -37,7 +37,7 @@ export class JokesStorageService {
 
   public removeJoke(joke: Joke) {
     this.loadJokes();
-    this.savedJokesList = this.savedJokesList.filter((element) => element.id == joke.id);
+    this.savedJokesList = this.savedJokesList.filter((element) => element.id !== joke.id);
     this.persistJokes();
   }
 

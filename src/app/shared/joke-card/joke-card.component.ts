@@ -1,5 +1,5 @@
 import { JokesStorageService } from './../../services/jokes-storage.service';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Joke } from 'src/app/services/types/joke.type';
 
 @Component({
@@ -17,14 +17,17 @@ export class JokeCardComponent {
   @Input()
   public deleteMode: boolean = false;
 
+  @Output() deletedJoke = new EventEmitter<Joke>();
+  @Output() addedJoke = new EventEmitter<Joke>();
+
   constructor(private jokeStorageService: JokesStorageService) {}
 
   public performAction(joke: Joke | undefined): void {
     if (joke) {
       if (this.deleteMode) {
-        this.jokeStorageService.removeJoke(joke);
+        this.deletedJoke.emit(joke);
       } else {
-        this.jokeStorageService.addJoke(joke);
+        this.addedJoke.emit(joke);
       }
     }
   }

@@ -1,3 +1,4 @@
+import { JokesStorageService } from './../../services/jokes-storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
@@ -18,7 +19,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private chuckApi: ChuckAPIService,
-    private router: Router
+    private router: Router,
+    private jokesStorageService: JokesStorageService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +61,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   public goToFavorites(): void {
     this.router.navigate(['/favorites']);
+  }
+
+  public addJokeToFavorites(event: Joke): void {
+    this.jokesStorageService.addJoke(event);
   }
 
   ngOnDestroy(): void {
