@@ -1,7 +1,7 @@
 import { JokesStorageService } from './../../services/jokes-storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, delay, interval } from 'rxjs';
 import { ChuckAPIService } from 'src/app/services/chuck-api.service';
 import { Joke } from 'src/app/services/types/joke.type';
 
