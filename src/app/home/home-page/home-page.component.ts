@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, interval } from 'rxjs';
-import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
+import { Subscription, interval } from 'rxjs';
+import { ChuckAPIService } from 'src/app/services/chuck-api.service';
+import { Joke } from 'src/app/services/types/joke.type';
 
 @Component({
   selector: 'app-home-page',
