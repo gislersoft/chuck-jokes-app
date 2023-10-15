@@ -28,4 +28,15 @@ export class JokeCardComponent {
       }
     }
   }
+
+  public getColor(joke: Joke | undefined): string {
+    if (joke) {
+      const currentJokesList = this.jokeStorageService.getJokes();
+      const found = currentJokesList.find((element)=> (element.id === joke.id));
+      if (found) {
+        return 'warn';
+      }
+    }
+    return '';
+  }
 }

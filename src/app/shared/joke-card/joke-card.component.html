@@ -6,7 +6,7 @@
             </div>
             <div class="col-xs middle-right">
 
-                <button mat-icon-button aria-label="Add to my favorites jokes" (click)="performAction(joke)">
+                <button mat-icon-button color="{{getColor(joke)}}" aria-label="Add to my favorites jokes" (click)="performAction(joke)">
                     <mat-icon>{{ (deleteMode) ? 'delete' : 'favorite'}}</mat-icon>
                 </button>
             </div>
