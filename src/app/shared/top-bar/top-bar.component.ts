@@ -7,8 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent {
-  @Input()
-  public currentPage: string = '';
+  @Input() public currentPage = '';
 
   constructor(private router: Router) {}
 

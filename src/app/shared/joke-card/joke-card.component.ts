@@ -8,14 +8,9 @@ import { Joke } from 'src/app/services/types/joke.type';
   styleUrls: ['./joke-card.component.scss']
 })
 export class JokeCardComponent {
-  @Input()
-  public index: number = 0;
-
-  @Input()
-  public joke: Joke | undefined = undefined;
-
-  @Input()
-  public deleteMode: boolean = false;
+  @Input() public index = 0;
+  @Input() public joke: Joke | undefined = undefined;
+  @Input() public deleteMode = false;
 
   @Output() deletedJoke = new EventEmitter<Joke>();
   @Output() addedJoke = new EventEmitter<Joke>();
