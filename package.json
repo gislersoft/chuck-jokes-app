@@ -9,6 +9,7 @@
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
     "package": "cd dist/chuck-jokes-app && tar -czvf ../../deployable.tgz *",
     "watch": "ng build --watch --configuration development",
+    "coverage": "ng test --no-watch --code-coverage",
     "test": "ng test",
     "lint": "ng lint"
   },
