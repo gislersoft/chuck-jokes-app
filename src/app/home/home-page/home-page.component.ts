@@ -53,10 +53,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  public addToFavorites(joke: Joke): void {
-    console.log(joke);
-  }
-
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
   }

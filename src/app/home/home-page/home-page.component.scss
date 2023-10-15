@@ -1,35 +1,9 @@
 .bar-spacer {
     flex: 1 1 auto;
 }
-.joke-card {
-    margin: 10px;
-    padding: 20px;
-}
 .spinner-div {
     padding-top: 35vh;
 }
 .app-title {
     font-size: 16pt;
-}
-.fading {
-    -webkit-animation-duration: 1s;
-    -webkit-animation-name: fading;
-    animation-duration: 1s;
-    animation-name: fading;
-}
-@-webkit-keyframes fading {
-    from {
-        color: green;
-    }
-    to {
-        color: white;
-    }
-}
-@keyframes fading {
-    from {
-        color: green;
-    }
-    to {
-        color: white;
-    }
 }

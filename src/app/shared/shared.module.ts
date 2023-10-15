@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomePageComponent } from './home-page/home-page.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,12 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { SharedModule } from '../shared/shared.module';
+import { JokeCardComponent } from './joke-card/joke-card.component';
 
 
 @NgModule({
   declarations: [
-    HomePageComponent
+    JokeCardComponent
   ],
   imports: [
     CommonModule,
@@ -21,8 +20,10 @@ import { SharedModule } from '../shared/shared.module';
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatToolbarModule,
-    SharedModule
+    MatToolbarModule
+  ],
+  exports: [
+    JokeCardComponent
   ]
 })
-export class HomeModule { }
+export class SharedModule { }
