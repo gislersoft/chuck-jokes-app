@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
 import { ChuckAPIService } from 'src/app/services/chuck-api.service';
 import { Joke } from 'src/app/services/types/joke.type';
@@ -15,7 +16,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public MAX_JOKES_PER_PAGE = 10;
   public jokesList:Joke[] = [];
 
-  constructor(private chuckApi: ChuckAPIService) {}
+  constructor(
+    private chuckApi: ChuckAPIService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadInitialJokes();
@@ -44,13 +48,17 @@ export class HomePageComponent implements OnInit, OnDestroy {
         results.timestamp = Date.now(); // Grab time maybe for unit tests later.
         this.jokesList.push(results);
         if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
-          // this.toggleTimer();
+          this.toggleTimer();
         }
       },
       error: (e) => {
         console.error(e)
       }
     });
+  }
+
+  public goToFavorites(): void {
+    this.router.navigate(['/favorites']);
   }
 
   ngOnDestroy(): void {

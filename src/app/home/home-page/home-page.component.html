@@ -1,18 +1,9 @@
 <div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <mat-toolbar color="primary">
-                <button mat-icon-button aria-label="Example icon-button with menu icon">
-                    <mat-icon>home</mat-icon>
-                </button>
-                <span class="app-title">Chuck Norris App</span>
-                <span class="bar-spacer"></span>
-                <button mat-button>
-                    <span>My favorites</span> <mat-icon>favorite</mat-icon>
-                </button>
-            </mat-toolbar>
-        </div>
-    </div>
+    <app-top-bar class="col-xs-12">
+        <button mat-button aria-label="Go to favorites" (click)="goToFavorites()">
+            <span>My favorites</span> <mat-icon>favorite</mat-icon>
+        </button>
+    </app-top-bar>
     <div class="col-xs-12 center" *ngIf="jokesList.length < MAX_JOKES_PER_PAGE">
         <div class="box spinner-div"><mat-spinner></mat-spinner></div>
     </div>

@@ -1,1 +1,8 @@
-<p>favorites-page works!</p>
+<div class="row">
+    <app-top-bar class="col-xs-12"></app-top-bar>
+    <div class="col-xs-12">
+        <ng-container *ngFor="let joke of jokesList.reverse(); let i = index">
+            <app-joke-card [index]="i" [joke]="joke"></app-joke-card>
+        </ng-container >
+    </div>
+</div>

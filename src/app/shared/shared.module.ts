@@ -8,27 +8,29 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { JokeCardComponent } from './joke-card/joke-card.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 
+const MATERIAL_MODULES = [
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatToolbarModule
+];
 @NgModule({
   declarations: [
-    JokeCardComponent
+    JokeCardComponent,
+    TopBarComponent
   ],
   imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule
+    MATERIAL_MODULES,
+    CommonModule
   ],
   exports: [
+    MATERIAL_MODULES,
     JokeCardComponent,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule
+    TopBarComponent
   ]
 })
 export class SharedModule { }
