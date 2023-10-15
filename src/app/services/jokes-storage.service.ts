@@ -34,4 +34,10 @@ export class JokesStorageService {
     this.savedJokesList.push(joke);
     this.persistJokes();
   }
+
+  public removeJoke(joke: Joke) {
+    this.loadJokes();
+    this.savedJokesList = this.savedJokesList.filter((element) => element.id == joke.id);
+    this.persistJokes();
+  }
 }

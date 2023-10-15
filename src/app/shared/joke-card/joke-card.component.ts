@@ -1,3 +1,4 @@
+import { JokesStorageService } from './../../services/jokes-storage.service';
 import { Component, Input } from '@angular/core';
 import { Joke } from 'src/app/services/types/joke.type';
 
@@ -16,7 +17,15 @@ export class JokeCardComponent {
   @Input()
   public deleteMode: boolean = false;
 
+  constructor(private jokeStorageService: JokesStorageService) {}
+
   public performAction(joke: Joke | undefined): void {
-    console.log(joke);
+    if (joke) {
+      if (this.deleteMode) {
+        this.jokeStorageService.removeJoke(joke);
+      } else {
+        this.jokeStorageService.addJoke(joke);
+      }
+    }
   }
 }
