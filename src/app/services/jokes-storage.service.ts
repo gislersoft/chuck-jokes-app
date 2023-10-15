@@ -40,4 +40,10 @@ export class JokesStorageService {
     this.savedJokesList = this.savedJokesList.filter((element) => element.id == joke.id);
     this.persistJokes();
   }
+
+  public isJokeInList(joke: Joke): boolean {
+    const currentJokesList = this.getJokes();
+    const found = currentJokesList.find((element)=> (element.id === joke.id));
+    return (found !== undefined);
+  }
 }
