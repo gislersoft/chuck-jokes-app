@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription, interval } from 'rxjs';
 import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
 
 @Component({
@@ -7,10 +7,12 @@ import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
-  private static INITIAL_RANDOM_JOKES = 10;
+export class HomePageComponent implements OnInit, OnDestroy {
+  private static TIMER_TIME = 5000;
+  private timerSubscription: Subscription = Subscription.EMPTY;
+
+  public MAX_JOKES_PER_PAGE = 10;
   public initialRandomJokes:Joke[] = [];
-  public loading = true;
 
   constructor(private chuckApi: ChuckAPIService) {}
 
@@ -19,26 +21,39 @@ export class HomePageComponent implements OnInit {
   }
 
   private loadInitialJokes(): void {
-    this.loading = true;
-
-    const requests:Array<Observable<Joke>> = [];
-
-    for(let i = 0; i < HomePageComponent.INITIAL_RANDOM_JOKES; i++) {
-      requests.push(this.chuckApi.getRandomJoke());
+    for(let i = 0; i < this.MAX_JOKES_PER_PAGE; i++) {
+      this.pushNewJoke();
     }
+  }
 
-    combineLatest(requests).subscribe({
-      next: (results:Joke[]) => {
-        this.initialRandomJokes = results;
-        this.loading = false;
+  private toggleTimer(): void {
+    if (this.timerSubscription === Subscription.EMPTY) {
+      this.timerSubscription = interval(HomePageComponent.TIMER_TIME).subscribe(() => {
+        this.pushNewJoke();
+      });
+    }
+  }
+
+  private pushNewJoke(): void {
+    this.chuckApi.getRandomJoke().subscribe({
+      next: (results:Joke) => {
+        if (this.initialRandomJokes.length >= this.MAX_JOKES_PER_PAGE) {
+          this.initialRandomJokes.shift();
+        }
+        results.timestamp = Date.now(); // Grab time maybe for unit tests later.
+        this.initialRandomJokes.push(results);
+        if (this.initialRandomJokes.length >= this.MAX_JOKES_PER_PAGE) {
+          this.toggleTimer();
+        }
       },
       error: (e) => {
         console.error(e)
-        this.loading = false;
-      },
-      complete: ()=> this.loading = false
+      }
     });
+  }
 
+  ngOnDestroy(): void {
+    this.timerSubscription.unsubscribe();
   }
 
 }

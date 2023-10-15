@@ -10,6 +10,7 @@ export type Joke = {
   updated_at?: string;
   url?: string;
   value?: string;
+  timestamp?: number;
 }
 
 @Injectable({

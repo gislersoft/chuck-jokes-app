@@ -13,13 +13,13 @@
             </mat-toolbar>
         </div>
     </div>
-    <div class="col-xs-12 center" *ngIf="loading">
+    <div class="col-xs-12 center" *ngIf="initialRandomJokes.length < MAX_JOKES_PER_PAGE">
         <div class="box spinner-div"><mat-spinner></mat-spinner></div>
     </div>
-    <div class="col-xs-12" *ngIf="!loading">
-        <mat-card class="joke-card" *ngFor="let joke of initialRandomJokes">
+    <div class="col-xs-12" *ngIf="initialRandomJokes.length >= MAX_JOKES_PER_PAGE">
+        <mat-card class="joke-card" *ngFor="let joke of initialRandomJokes.reverse(); let i = index">
             <mat-card-content>
-                {{joke.value}}
+                <span [ngClass]="{'fading': (i==0)}">{{joke.value}}</span>
             </mat-card-content>
         </mat-card>
     </div>
