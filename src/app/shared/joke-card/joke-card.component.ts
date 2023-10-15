@@ -13,7 +13,10 @@ export class JokeCardComponent {
   @Input()
   public joke: Joke | undefined = undefined;
 
-  public addToFavorites(joke: Joke | undefined): void {
+  @Input()
+  public deleteMode: boolean = false;
+
+  public performAction(joke: Joke | undefined): void {
     console.log(joke);
   }
 }
