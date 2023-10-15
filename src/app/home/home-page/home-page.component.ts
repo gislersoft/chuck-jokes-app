@@ -1,44 +1,74 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { ChuckAPIService, Joke } from 'src/app/services/chuck-api.service';
+import { JokesStorageService } from './../../services/jokes-storage.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription, interval } from 'rxjs';
+import { ChuckAPIService } from 'src/app/services/chuck-api.service';
+import { Joke } from 'src/app/services/types/joke.type';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
-  private static INITIAL_RANDOM_JOKES = 10;
-  public initialRandomJokes:Joke[] = [];
-  public loading = true;
+export class HomePageComponent implements OnInit, OnDestroy {
+  private static TIMER_TIME = 5000;
+  private timerSubscription: Subscription = Subscription.EMPTY;
 
-  constructor(private chuckApi: ChuckAPIService) {}
+  public MAX_JOKES_PER_PAGE = 10;
+  public jokesList:Joke[] = [];
+
+  constructor(
+    private chuckApi: ChuckAPIService,
+    private router: Router,
+    private jokesStorageService: JokesStorageService
+  ) {}
 
   ngOnInit(): void {
     this.loadInitialJokes();
   }
 
   private loadInitialJokes(): void {
-    this.loading = true;
-
-    const requests:Array<Observable<Joke>> = [];
-
-    for(let i = 0; i < HomePageComponent.INITIAL_RANDOM_JOKES; i++) {
-      requests.push(this.chuckApi.getRandomJoke());
+    for(let i = 0; i < this.MAX_JOKES_PER_PAGE; i++) {
+      this.pushNewJoke();
     }
+  }
 
-    combineLatest(requests).subscribe({
-      next: (results:Joke[]) => {
-        this.initialRandomJokes = results;
-        this.loading = false;
+  private toggleTimer(): void {
+    if (this.timerSubscription === Subscription.EMPTY) {
+      this.timerSubscription = interval(HomePageComponent.TIMER_TIME).subscribe(() => {
+        this.pushNewJoke();
+      });
+    }
+  }
+
+  private pushNewJoke(): void {
+    this.chuckApi.getRandomJoke().subscribe({
+      next: (results:Joke) => {
+        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+          this.jokesList.shift();
+        }
+        results.timestamp = Date.now(); // Grab time maybe for unit tests later.
+        this.jokesList.push(results);
+        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+          this.toggleTimer();
+        }
       },
       error: (e) => {
         console.error(e)
-        this.loading = false;
-      },
-      complete: ()=> this.loading = false
+      }
     });
+  }
 
+  public goToFavorites(): void {
+    this.router.navigate(['/favorites']);
+  }
+
+  public addJokeToFavorites(event: Joke): void {
+    this.jokesStorageService.addJoke(event);
+  }
+
+  ngOnDestroy(): void {
+    this.timerSubscription.unsubscribe();
   }
 
 }

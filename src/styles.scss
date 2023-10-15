@@ -8,6 +8,19 @@ html, body {
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .center {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
+}
+.middle-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.middle-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.auto-margin {
+    margin: auto;
 }

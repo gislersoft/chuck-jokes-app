@@ -9,18 +9,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { FavoritesModule } from './favorites/favorites.module';
 
-// Angular Material Modules
-
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    HomeModule,
-    FavoritesModule,
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    FavoritesModule,
+    HomeModule,
     HttpClientModule
   ],
   providers: [],

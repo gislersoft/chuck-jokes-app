@@ -1,0 +1,14 @@
+<mat-card class="joke-card">
+    <mat-card-content>
+        <div class="row">
+            <div class="col-xs-10 middle-left">
+                <span [ngClass]="{'fading': (index==0 && !deleteMode)}">{{joke?.value}}</span>
+            </div>
+            <div class="col-xs middle-right">
+                <button mat-icon-button color="{{ (deleteMode) ? '' : getColor(joke) }}" aria-label="Add to my favorites jokes" (click)="performAction(joke)">
+                    <mat-icon>{{ (deleteMode) ? 'delete' : 'favorite'}}</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
