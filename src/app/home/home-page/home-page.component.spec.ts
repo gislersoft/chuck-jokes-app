@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { HomePageComponent } from './home-page.component';
 
@@ -19,7 +19,7 @@ const chuckAPIServiceMock = {
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
   let fixture: ComponentFixture<HomePageComponent>;
-  let maximumJokes: Joke[] = [...chuckJokesMock];
+  const maximumJokes: Joke[] = [...chuckJokesMock];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
