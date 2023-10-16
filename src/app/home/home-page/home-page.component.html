@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="col-xs-12" *ngIf="jokesList.length >= MAX_JOKES_PER_PAGE">
-        <ng-container *ngFor="let joke of jokesList.reverse(); let i = index">
+        <ng-container *ngFor="let joke of jokesList.slice().reverse(); let i = index">
             <app-joke-card
                 [index]="i"
                 [joke]="joke"
