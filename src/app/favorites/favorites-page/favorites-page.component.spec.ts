@@ -20,9 +20,9 @@ describe('FavoritesPageComponent', () => {
 
     fixture = TestBed.createComponent(FavoritesPageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     localStorage.clear();
     localStorage.setItem(JokesStorageService.STORE_JOKE_KEY, JSON.stringify(chuckJokesMock));
+    fixture.detectChanges();
   });
 
   it('should create', () => {
