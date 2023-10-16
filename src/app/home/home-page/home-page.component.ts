@@ -12,7 +12,7 @@ import { Joke } from 'src/app/services/types/joke.type';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   private static TIMER_TIME = 5000;
-  private timerSubscription: Subscription = Subscription.EMPTY;
+  public timerSubscription: Subscription = Subscription.EMPTY;
 
   public MAX_JOKES_PER_PAGE = 10;
   public jokesList:Joke[] = [];
@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private toggleTimer(): void {
+  public toggleTimer(): void {
     if (this.timerSubscription === Subscription.EMPTY) {
       this.timerSubscription = interval(HomePageComponent.TIMER_TIME).subscribe(() => {
         this.pushNewJoke();
@@ -41,22 +41,27 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushNewJoke(): void {
+  public pushJoke(joke: Joke): void {
+
+    if (this.isAnExistingJoke(joke) ||
+        this.jokesStorageService.isJokeInList(joke)
+      ) {
+        return; // Ignore same jokes.
+      }
+      if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+        this.jokesList.shift();
+      }
+      joke.timestamp = Date.now(); // Grab time maybe for unit tests later.
+      this.jokesList.push(joke);
+      if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
+        this.toggleTimer();
+      }
+  }
+
+  public pushNewJoke(): void {
     this.chuckApi.getRandomJoke().subscribe({
       next: (results:Joke) => {
-        if (this.isAnExistingJoke(results) ||
-          this.jokesStorageService.isJokeInList(results)
-        ) {
-          return; // Ignore same jokes.
-        }
-        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
-          this.jokesList.shift();
-        }
-        results.timestamp = Date.now(); // Grab time maybe for unit tests later.
-        this.jokesList.push(results);
-        if (this.jokesList.length >= this.MAX_JOKES_PER_PAGE) {
-          this.toggleTimer();
-        }
+        this.pushJoke(results);
       },
       error: (e) => {
         console.error(e)
